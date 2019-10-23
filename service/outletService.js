@@ -4,16 +4,29 @@ const constant = require('../constants')
 const mongoose = require('mongoose')
 const Restaurants = require('../database/models/RestaurantModel')
 const users = require('../database/models/userModel')
+const Rawmaterials = require('../database/models/rawMaterialModel')
 
 module.exports.createOutlet = async (outletData) =>{
     try{
-        const {manager} = outletData;
-        let mgr = await users.findOne().where('_id').in(manager).exec();
-        outletData.manager = mgr;
+        let manager = await users.findOne({_id:outletData.manager,role:"outlet_manager"})
+        outletData.manager = manager;
 
-        const {restaurant} = outletData;
-        let restrnt = await Restaurants.findOne().where('_id').in(restaurant).exec();
-        outletData.restaurant = restrnt;
+        let restaurant = await Restaurants.findOne({_id:outletData.restaurant})
+        outletData.restaurant = restaurant;
+
+        const {raw_ids} = outletData;
+        let ids = [];
+        raw_ids.map(value=>{
+            ids.push(value.id)
+        })
+        let raw = await Rawmaterials.find().where('_id').in(ids).exec();
+        
+        let data = []
+
+        raw.map(value=>{
+            data.push({_id:value,stock_qty:raw_ids[raw.indexOf(value)].stock_qty,threshold:raw_ids[raw.indexOf(value)].threshold})
+        });
+        outletData.raw_materials = data;
 
         let outlet = new Outlets({...outletData});
         let result = await outlet.save();

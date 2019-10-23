@@ -11,7 +11,15 @@ const Outlet = new mongoose.Schema({
     restaurant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant'
-    }
+    },
+    raw_materials:[{
+        _id:{
+            type: mongoose.Schema.Types.Object,
+            ref: 'RawMaterial'
+        },
+        stock_qty: {type: Number},
+        threshold: {type: Number}
+    }]
 },{
     timestamps: true,
     toObject:{
