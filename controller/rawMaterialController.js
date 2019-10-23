@@ -52,12 +52,31 @@ module.exports.updateRawMaterial = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await rawService.updateRawMaterial(req.body);
+        const responseFromService = await rawService.updateRawMaterial({
+            id: req.params.id,
+            updateInfo: req.body
+        });
         response.status = 200;
-        response.message = "success"
+        response.message = constants.rawMaterial.RAW_MATERIAL_UPDATED
         response.body = responseFromService;
     }catch(error){
         console.log('Something went wrong: Controller: updateRawMaterial');
+        response.message = error.message    
+    }
+
+    return res.status(response.status).send(response)
+}
+
+module.exports.deleteRawMaterial = async (req,res) => {
+    let response = {...constants.defaultServerResponse};
+
+    try{
+        const responseFromService = await rawService.deleteRawMaterial(req.params);
+        response.status = 200;
+        response.message = constants.rawMaterial.RAW_MATERIAL_DELETED
+        response.body = responseFromService;
+    }catch(error){
+        console.log('Something went wrong: Controller: deleteRawMaterial');
         response.message = error.message    
     }
 

@@ -38,16 +38,32 @@ module.exports.getRawMaterialById = async ({id}) =>{
   }
 }
 
-module.exports.updateRawMaterial = async ({id}) =>{
+module.exports.updateRawMaterial = async ({id, updateInfo}) =>{
   try{
    checkObjectId(id);
-   let rawmaterial = await RawMaterial.findById(id);
+   let rawmaterial = await RawMaterial.findOneAndUpdate({_id:id},updateInfo,{ new : true});
+   
    if(!rawmaterial){
      throw new Error(constant.rawMaterial.RAW_MATERIAL_NOT_FOUND) 
    }
    return formatMongoData(rawmaterial);
   }catch(error){
     console.log('Something went wrong: Service: updateRawMaterial', error)
+    throw new Error(error)
+  }
+}
+
+module.exports.deleteRawMaterial = async ({id}) =>{
+  try{
+   checkObjectId(id);
+   let rawmaterial = await RawMaterial.findByIdAndDelete(id);
+   
+   if(!rawmaterial){
+     throw new Error(constant.rawMaterial.RAW_MATERIAL_NOT_FOUND) 
+   }
+   return formatMongoData(rawmaterial);
+  }catch(error){
+    console.log('Something went wrong: Service: deleteRawMaterial', error)
     throw new Error(error)
   }
 }

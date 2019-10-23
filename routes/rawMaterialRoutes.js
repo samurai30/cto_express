@@ -16,4 +16,6 @@ joiSchemaValidation.validateQueryData(rawMaterialSchema.getAllRawMaterialSchema)
 
 router.put('/:id',joiSchemaValidation.validateBody(rawMaterialSchema.updateRawMaterialSchema),rawController.updateRawMaterial)
 
+router.delete('/:id',rawController.deleteRawMaterial)
+
 module.exports = router
