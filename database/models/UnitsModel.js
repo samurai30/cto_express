@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
 
-const rawMaterialSchema = new mongoose.Schema({
-    name:String,
-    unit: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Unit'
-    }
+const unitsSchema = new mongoose.Schema({
+    designation:String,
+    primary_name: String,
+    secondary_name: String
 },
 {
     timestamps: true,
@@ -15,8 +13,10 @@ const rawMaterialSchema = new mongoose.Schema({
             ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
+            delete ret.createdAt;
+            delete ret.updatedAt;
             return ret;
         }
     }
 })
-module.exports = mongoose.model('RawMaterial', rawMaterialSchema)
+module.exports = mongoose.model('Unit', unitsSchema)

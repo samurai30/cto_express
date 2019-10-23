@@ -1,10 +1,21 @@
 const RawMaterial = require('../database/models/rawMaterialModel');
 const {formatMongoData, checkObjectId} = require('../helpers/dbHelper')
 const constant = require('../constants')
+const Units = require('../database/models/UnitsModel')
 
-module.exports.createRawMaterial = async (rawData) =>{
+module.exports.createRawMaterial = async ({name,unit_id}) =>{
    try{
-    let raw = new RawMaterial({...rawData})
+    checkObjectId(unit_id);
+    let unit = await Units.findById(unit_id)
+    if(!unit){
+      throw new Error("Sorry cloudn't find any units with id: "+unit_id)
+    }
+    let rawmaterial = await RawMaterial.findOne({name:name.toLowerCase()})
+     
+    if(rawmaterial){
+      throw new Error("This item already exists")
+    }
+    let raw = new RawMaterial({name:name.toLowerCase(),unit})
     let result = await raw.save();
     return formatMongoData(result);
    }catch(error){

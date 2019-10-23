@@ -29,5 +29,10 @@ module.exports = {
         LOGIN_SUCCESS: "Login Success",
         USER_NOT_FOUND: "User Not found",
         INVALID_PASSWORD: "Incorrect Password"
+    },
+    unitMessage:{
+        UNIT_CREATED: "Unit created successsfuly",
+        UNIT_EXISTS: "Unit with a similar name already exists",
+        UNIT_FETCHED: "Units Fetched Successfuly"
     }
 }
