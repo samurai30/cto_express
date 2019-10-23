@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     name: String,
     address: String,
-    contact: Number,
+    contact: String,
     email: String,
     password: String
 },{
@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
             delete ret._id;
             delete ret.password
             delete ret.__v;
+            delete ret.createdAt,
+            delete ret.updatedAt
             return ret;
         }
     }

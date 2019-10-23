@@ -3,7 +3,7 @@ const Joi = require('@hapi/joi')
 module.exports.createSupplierSchema = Joi.object().keys({
     name: Joi.string().required(),
     address: Joi.string().required(),
-    contact: Joi.number().required(),
+    contact: Joi.string().regex(/^[0-9]{10}$/).required(),
     gstin: Joi.string().alphanum().required(),
     raw_ids:Joi.array().required()
 })

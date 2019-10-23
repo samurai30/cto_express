@@ -33,3 +33,19 @@ module.exports.getAllUnit = async (req,res) =>{
     }
     return res.status(response.status).send(response)
 }
+
+module.exports.deleteUnits = async (req,res) => {
+    let response = {...constants.defaultServerResponse};
+
+    try{
+        const responseFromService = await unitService.deleteUnits(req.params);
+        response.status = 200;
+        response.message = constants.unitMessage.UNIT_DELETE
+        response.body = responseFromService;
+    }catch(error){
+        console.log('Something went wrong: Controller: deleteUnit');
+        response.message = error.message    
+    }
+
+    return res.status(response.status).send(response)
+}

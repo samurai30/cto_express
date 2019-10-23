@@ -6,6 +6,10 @@ const rawMaterialSchema = new mongoose.Schema({
     unit: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Unit'
+    },
+    catagory:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
     }
 },
 {
@@ -15,6 +19,8 @@ const rawMaterialSchema = new mongoose.Schema({
             ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
+            delete ret.createdAt,
+            delete ret.updatedAt
             return ret;
         }
     }

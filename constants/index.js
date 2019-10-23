@@ -49,6 +49,8 @@ module.exports = {
     unitMessage:{
         UNIT_CREATED: "Unit created successsfuly",
         UNIT_EXISTS: "Unit with a similar name already exists",
-        UNIT_FETCHED: "Units Fetched Successfuly"
+        UNIT_FETCHED: "Units Fetched Successfuly",
+        UNIT_NOT_FOUND: "Unit Not Found",
+        UNIT_DELETE: "Unit deleted"
     }
 }

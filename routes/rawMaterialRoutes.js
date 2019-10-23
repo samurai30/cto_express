@@ -18,8 +18,8 @@ router.get('/',tokenValidation.validateToken,
 joiSchemaValidation.validateQueryData(rawMaterialSchema.getAllRawMaterialSchema)
 ,rawController.getAllRawMaterials)
 
-router.put('/:id',joiSchemaValidation.validateBody(rawMaterialSchema.updateRawMaterialSchema),checRoles.hasAccess('super_admin'),rawController.updateRawMaterial)
+router.put('/:id',joiSchemaValidation.validateBody(rawMaterialSchema.updateRawMaterialSchema),tokenValidation.validateToken,checRoles.hasAccess('super_admin'),rawController.updateRawMaterial)
 
-router.delete('/:id',checRoles.hasAccess('super_admin'),rawController.deleteRawMaterial)
+router.delete('/:id',tokenValidation.validateToken,checRoles.hasAccess('super_admin'),rawController.deleteRawMaterial)
 
 module.exports = router

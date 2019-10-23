@@ -45,3 +45,58 @@ module.exports.registerUser = async (userData) =>{
         throw new Error(error);
     }
 }
+
+module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
+    try{
+   
+     let user = await Users.find({}).skip(parseInt(skip)).limit(parseInt(limit));
+     return formatMongoData(user);
+    }catch(error){
+      console.log('Something went wrong: Service: getAllProducts', error)
+      throw new Error(error)
+    }
+  }
+  
+  module.exports.getUserById = async ({id}) =>{
+    try{
+     checkObjectId(id);
+     let user = await Users.findById(id);
+     if(!user){
+       throw new Error("User not found") 
+     }
+     return formatMongoData(user);
+    }catch(error){
+      console.log('Something went wrong: Service: getRawMaterialById', error)
+      throw new Error(error)
+    }
+  }
+  
+  module.exports.updateUsers = async ({id, updateInfo}) =>{
+    try{
+     checkObjectId(id);
+     let user = await Users.findOneAndUpdate({_id:id},updateInfo,{ new : true});
+     console.log(user)
+     if(!user){
+       throw new Error("User not found") 
+     }
+     return formatMongoData(user);
+    }catch(error){
+      console.log('Something went wrong: Service: updateRawMaterial', error)
+      throw new Error(error)
+    }
+  }
+  
+  module.exports.deleteUser = async ({id}) =>{
+    try{
+     checkObjectId(id);
+     let user = await Users.findByIdAndDelete(id);
+     
+     if(!user){
+       throw new Error("Sorry user not found") 
+     }
+     return formatMongoData(user);
+    }catch(error){
+      console.log('Something went wrong: Service: deleteUser', error)
+      throw new Error(error)
+    }
+  }

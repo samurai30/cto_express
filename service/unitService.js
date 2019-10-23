@@ -20,8 +20,6 @@ module.exports.createUnit = async (unitData) =>{
     }
 }
 
-
- 
 module.exports.getAllUnit = async ({skip=0, limit=10}) =>{
     try{
         let unit = await Units.find({}).skip(parseInt(skip)).limit(parseInt(limit));
@@ -29,5 +27,20 @@ module.exports.getAllUnit = async ({skip=0, limit=10}) =>{
     }catch(error){
         console.log('Something went wrong: Service: getAllUnit', error)
         throw new Error(error);
+    }
+}
+
+module.exports.deleteUnits = async ({id}) =>{
+    try{
+        checkObjectId(id);
+        let unit = await Units.findByIdAndDelete(id);
+    
+        if(!unit){
+            throw new Error(constant.unitMessage.UNIT_NOT_FOUND) 
+        }
+        return formatMongoData(unit);
+    }catch(error){
+        console.log('Something went wrong: Service: deleteUnits', error)
+        throw new Error(error)
     }
 }
