@@ -32,6 +32,13 @@ module.exports = {
         RESTAURANT_DELETED: "Restaurant Deleted",
         RESTAURANT_NOT_FOUND: "Restaurant not found"
     },
+    outlet:{
+        OUTLET_CREATED: "Outlet Created",
+        OUTLET_FETCHED: "Outlet Fetched",
+        OUTLET_UPDATED: "Outlet Updated",
+        OUTLET_DELETED: "Outlet Deleted",
+        OUTLET_NOT_FOUND: "Outlet not found"
+    },
     requestValidationMessage:{
         BAD_REQUEST: "Invalid Fields",
         TOKEN_MISSING: "Missing Token"
