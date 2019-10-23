@@ -60,7 +60,7 @@ module.exports.deleteCategory = async ({id}) =>{
         if(!category){
             throw new Error(constant.category.CATEGORY_NOT_FOUND) 
         }
-        return formatMongoData(supplier);
+        return formatMongoData(category);
     }catch(error){
         console.log('Something went wrong: Service: deleteCategory', error)
         throw new Error(error)

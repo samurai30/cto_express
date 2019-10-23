@@ -13,8 +13,8 @@ module.exports.getAllSupplierSchema = Joi.object().keys({
 });
 
 module.exports.updateSupplierSchema = Joi.object().keys({
-    name: Joi.string().required(),
-    address: Joi.string().required(),
-    contact: Joi.number().required(),
-    gstin: Joi.string().alphanum().required()
+    name: Joi.string(),
+    address: Joi.string(),
+    contact: Joi.number(),
+    gstin: Joi.string().alphanum()
 });

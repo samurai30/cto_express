@@ -20,6 +20,7 @@ app.use('/api/v1/raw_material', require('./routes/rawMaterialRoutes'))
 app.use('/api/v1/suppliers', require('./routes/supplierRoutes'))
 app.use('/api/v1/user', require('./routes/userRoutes'))
 app.use('/api/v1/category', require('./routes/categoryRoutes'))
+app.use('/api/v1/restaurant', require('./routes/restaurantRoutes'))
 
 //Error Handle
 app.use(function(err,req,res,next){

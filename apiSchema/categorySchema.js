@@ -10,5 +10,5 @@ module.exports.getAllCategoriesSchema = Joi.object().keys({
 });
 
 module.exports.updateCategorySchema = Joi.object().keys({
-    name: Joi.string().required()
+    name: Joi.string()
 });

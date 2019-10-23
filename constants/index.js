@@ -25,6 +25,13 @@ module.exports = {
         CATEGORY_DELETED: "Category Deleted",
         CATEGORY_NOT_FOUND: "Category not found"
     },
+    restaurant:{
+        RESTAURANT_CREATED: "Restaurant Created",
+        RESTAURANT_FETCHED: "Restaurant Fetched",
+        RESTAURANT_UPDATED: "Restaurant Updated",
+        RESTAURANT_DELETED: "Restaurant Deleted",
+        RESTAURANT_NOT_FOUND: "Restaurant not found"
+    },
     requestValidationMessage:{
         BAD_REQUEST: "Invalid Fields"
     },
