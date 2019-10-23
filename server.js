@@ -15,8 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 
+// API Routes
 app.use('/api/v1/raw_material', require('./routes/rawMaterialRoutes'))
 app.use('/api/v1/suppliers', require('./routes/supplierRoutes'))
+
 //Error Handle
 app.use(function(err,req,res,next){
     res.status(500).send(

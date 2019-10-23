@@ -52,7 +52,7 @@ module.exports.updateRawMaterial = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await rawService.updateRawMaterial(req.body);
+        const responseFromService = await rawService.updateRawMaterial({id:req.params.id,updateInfo:req.body});
         response.status = 200;
         response.message = "success"
         response.body = responseFromService;

@@ -6,3 +6,15 @@ module.exports.createSupplierSchema = Joi.object().keys({
     contact: Joi.number().required(),
     gstin: Joi.string().alphanum().required()
 })
+
+module.exports.getAllSupplierSchema = Joi.object().keys({
+    skip: Joi.string(),
+    limit: Joi.string()
+});
+
+module.exports.updateSupplierSchema = Joi.object().keys({
+    name: Joi.string().required(),
+    address: Joi.string().required(),
+    contact: Joi.number().required(),
+    gstin: Joi.string().alphanum().required()
+});

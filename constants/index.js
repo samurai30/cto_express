@@ -12,6 +12,7 @@ module.exports = {
     supplier:{
         SUPPLIER_CREATED: "Supplier Created",
         SUPPLIER_FETCHED: "Supplier Fetched",
+        SUPPLIER_UPDATED: "Supplier Updated",
         SUPPLIER_NOT_FOUND: "Supplier not found"
     },
     requestValidationMessage:{
