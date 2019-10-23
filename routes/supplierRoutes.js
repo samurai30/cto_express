@@ -13,4 +13,6 @@ router.get('/',joiValidation.validateQueryData(supplierSchema.getAllSupplierSche
 
 router.put('/:id',joiValidation.validateBody(supplierSchema.updateSupplierSchema),supplierController.updateSupplier);
 
+router.delete('/:id',supplierController.deleteSupplier);
+
 module.exports = router;

@@ -1,83 +1,83 @@
 const constants = require('../constants')
-const supplierService = require('../service/supplierService')
+const categoryService = require('../service/categoryService')
 
-module.exports.createSupplier = async (req,res) =>{
+module.exports.createCategory = async (req,res) =>{
     let response = {...constants.defaultServerResponse}
 
     try{
-        const responseFromService = await supplierService.createSupplier(req.body);
+        const responseFromService = await categoryService.createCategory(req.body);
         response.status = 200;
-        response.message = constants.supplier.SUPPLIER_CREATED;
+        response.message = constants.category.CATEGORY_CREATED;
         response.body = responseFromService;
 
     }catch(error){
-        console.log('Something went wrong: Controller: createSupplier');
+        console.log('Something went wrong: Controller: createCategory');
         response.message = error.message
     }
     return res.status(response.status).send(response)
 }
 
-module.exports.getAllSuppliers = async (req,res) => {
+module.exports.getAllCategories = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await supplierService.getAllSuppliers(req.query);
+        const responseFromService = await categoryService.getAllCategories(req.query);
         response.status = 200;
-        response.message = constants.supplier.SUPPLIER_FETCHED;
+        response.message = constants.category.CATEGORY_FETCHED;
         response.body = responseFromService;
     }catch(error){
-        console.log('Something went wrong: Controller: getAllSuppliers');
+        console.log('Something went wrong: Controller: getAllCategories');
         response.message = error.message    
     }
 
     return res.status(response.status).send(response)
 }
 
-module.exports.getSupplierById = async (req,res) => {
+module.exports.getCategoryById = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await supplierService.getSupplierById(req.params);
+        const responseFromService = await categoryService.getCategoryById(req.params);
         response.status = 200;
-        response.message = constants.supplier.SUPPLIER_FETCHED;
+        response.message = constants.category.CATEGORY_FETCHED;
         response.body = responseFromService;
     }catch(error){
-        console.log('Something went wrong: Controller: getSupplierById');
+        console.log('Something went wrong: Controller: getCategoryById');
         response.message = error.message    
     }
 
     return res.status(response.status).send(response)
 }
 
-module.exports.updateSupplier = async (req,res) => {
+module.exports.updateCategory = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await supplierService.updateSupplier({
+        const responseFromService = await categoryService.updateCategory({
             id: req.params.id,
             updateInfo: req.body
         });
         response.status = 200;
-        response.message = constants.supplier.SUPPLIER_UPDATED;
+        response.message = constants.category.CATEGORY_UPDATED;
         response.body = responseFromService;
     }catch(error){
-        console.log('Something went wrong: Controller: updateSupplier');
+        console.log('Something went wrong: Controller: updateCategory');
         response.message = error.message    
     }
 
     return res.status(response.status).send(response)
 }
 
-module.exports.deleteSupplier = async (req,res) => {
+module.exports.deleteCategory = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await supplierService.deleteSupplier(req.params);
+        const responseFromService = await categoryService.deleteCategory(req.params);
         response.status = 200;
-        response.message = constants.supplier.SUPPLIER_DELETED;
+        response.message = constants.category.CATEGORY_DELETED;
         response.body = responseFromService;
     }catch(error){
-        console.log('Something went wrong: Controller: deleteSupplier');
+        console.log('Something went wrong: Controller: deleteCategory');
         response.message = error.message    
     }
 

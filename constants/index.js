@@ -15,7 +15,15 @@ module.exports = {
         SUPPLIER_CREATED: "Supplier Created",
         SUPPLIER_FETCHED: "Supplier Fetched",
         SUPPLIER_UPDATED: "Supplier Updated",
+        SUPPLIER_DELETED: "Supplier Deleted",
         SUPPLIER_NOT_FOUND: "Supplier not found"
+    },
+    category:{
+        CATEGORY_CREATED: "Category Created",
+        CATEGORY_FETCHED: "Category Fetched",
+        CATEGORY_UPDATED: "Category Updated",
+        CATEGORY_DELETED: "Category Deleted",
+        CATEGORY_NOT_FOUND: "Category not found"
     },
     requestValidationMessage:{
         BAD_REQUEST: "Invalid Fields"
