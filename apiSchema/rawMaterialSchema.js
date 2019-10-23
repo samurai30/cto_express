@@ -11,3 +11,8 @@ module.exports.getAllRawMaterialSchema = Joi.object().keys({
     limit: Joi.string()
 });
 
+module.exports.updateRawMaterialSchema = Joi.object().keys({
+    name: Joi.string(),
+    price: Joi.number(),
+    supplier: Joi.string()
+});

@@ -48,3 +48,18 @@ module.exports.getRawMaterialById = async (req,res) => {
 
     return res.status(response.status).send(response)
 }
+module.exports.updateRawMaterial = async (req,res) => {
+    let response = {...constants.defaultServerResponse};
+
+    try{
+        const responseFromService = await rawService.updateRawMaterial(req.body);
+        response.status = 200;
+        response.message = "success"
+        response.body = responseFromService;
+    }catch(error){
+        console.log('Something went wrong: Controller: updateRawMaterial');
+        response.message = error.message    
+    }
+
+    return res.status(response.status).send(response)
+}

@@ -14,6 +14,6 @@ router.get('/',
 joiSchemaValidation.validateQueryData(rawMaterialSchema.getAllRawMaterialSchema)
 ,rawController.getAllRawMaterials)
 
-
+router.put('/:id',joiSchemaValidation.validateBody(rawMaterialSchema.updateRawMaterialSchema),rawController.updateRawMaterial)
 
 module.exports = router
