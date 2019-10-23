@@ -5,6 +5,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const cors = require('cors')
 const dbConnection = require('./database/connection')
+const session = require('express-session')
 
 
 app.use(cors())
@@ -14,6 +15,13 @@ dbConnection();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'suyog@100',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 app.use('/api/v1/raw_material', require('./routes/rawMaterialRoutes'))
 app.use('/api/v1/suppliers', require('./routes/supplierRoutes'))

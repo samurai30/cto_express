@@ -1,5 +1,7 @@
 const constants = require('../constants')
 const supplierService = require('../service/supplierService')
+
+
 module.exports.createSupplier = async (req,res) =>{
     let response = {...constants.defaultServerResponse}
 
@@ -11,7 +13,7 @@ module.exports.createSupplier = async (req,res) =>{
 
     }catch(error){
         console.log('Something went wrong: Controller: createSupplier');
-        throw new Error(error)
+        response.message = error.message;
     }
     return res.status(response.status).send(response)
 }

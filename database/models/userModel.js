@@ -19,4 +19,13 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.plugin(require('mongoose-role'),{
+    roles: ['super_admin','store_manager','outlet_manager'],
+    accessLevels:{
+        outlet_manager: ['super_admin','outlet_manager'],
+        store_manager: ['store_manager','super_admin'],
+        super_admin: ['super_admin']
+    }
+});
+
 module.exports = mongoose.model('User',userSchema);

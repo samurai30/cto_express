@@ -17,13 +17,17 @@ module.exports = {
         SUPPLIER_NOT_FOUND: "Supplier not found"
     },
     requestValidationMessage:{
-        BAD_REQUEST: "Invalid Fields"
+        BAD_REQUEST: "Invalid Fields",
+        TOKEN_MISSING: "Missing Token"
     },
     databaseMessage:{
         INVALID_ID: "Invalid ID"
     },
     userMessage:{
         ADD_USER_SUCCESS: "Added user successfuly",
-        USER_EXISTS: "User already exits with given email"
+        USER_EXISTS: "User already exits with given email",
+        LOGIN_SUCCESS: "Login Success",
+        USER_NOT_FOUND: "User Not found",
+        INVALID_PASSWORD: "Incorrect Password"
     }
 }

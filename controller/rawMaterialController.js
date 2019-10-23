@@ -23,7 +23,7 @@ module.exports.getAllRawMaterials = async (req,res) => {
     try{
         const responseFromService = await rawService.getAllRawMaterials(req.query);
         response.status = 200;
-        response.message = constants.rawMaterial.RAW_MATERIAL_CREATED;
+        response.message = "success";
         response.body = responseFromService;
     }catch(error){
         console.log('Something went wrong: Controller: createRawMaterial');
