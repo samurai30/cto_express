@@ -1,6 +1,7 @@
 const RawMaterial = require('../database/models/rawMaterialModel');
 const {formatMongoData, checkObjectId} = require('../helpers/dbHelper')
 const constant = require('../constants')
+
 module.exports.createRawMaterial = async (rawData) =>{
    try{
     let raw = new RawMaterial({...rawData})

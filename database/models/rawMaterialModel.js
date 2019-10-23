@@ -5,7 +5,8 @@ const rawMaterialSchema = new mongoose.Schema({
     name:String,
     price: Number,
     supplier: String
-},{
+},
+{
     timestamps: true,
     toObject: {
         transform: function(doc,ret,options){
