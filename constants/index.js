@@ -7,6 +7,8 @@ module.exports = {
     rawMaterial:{
         RAW_MATERIAL_CREATED: "Raw Material Created",
         RAW_MATERIAL_FETCHED: "Material Fetched",
+        RAW_MATERIAL_UPDATED: "Raw material updated",
+        RAW_MATERIAL_DELETED: "Raw material deleted successfuly",
         RAW_MATERIAL_NOT_FOUND: "Raw material not found"
     },
     supplier:{
@@ -20,5 +22,9 @@ module.exports = {
     },
     databaseMessage:{
         INVALID_ID: "Invalid ID"
+    },
+    userMessage:{
+        ADD_USER_SUCCESS: "Added user successfuly",
+        USER_EXISTS: "User already exits with given email"
     }
 }
