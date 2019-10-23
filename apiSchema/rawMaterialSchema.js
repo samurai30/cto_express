@@ -10,3 +10,4 @@ module.exports.getAllRawMaterialSchema = Joi.object().keys({
     skip: Joi.string(),
     limit: Joi.string()
 });
+
