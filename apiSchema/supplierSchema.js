@@ -4,7 +4,8 @@ module.exports.createSupplierSchema = Joi.object().keys({
     name: Joi.string().required(),
     address: Joi.string().required(),
     contact: Joi.number().required(),
-    gstin: Joi.string().alphanum().required()
+    gstin: Joi.string().alphanum().required(),
+    raw_ids:Joi.array().required()
 })
 
 module.exports.getAllSupplierSchema = Joi.object().keys({

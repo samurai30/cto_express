@@ -4,7 +4,11 @@ const Supplier = new mongoose.Schema({
     name: String,
     address: String,
     contact: Number,
-    gstin: String
+    gstin: String,
+    raw_material: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'RawMaterial'
+    }]
 },{
     timestamps: true,
     toObject:{

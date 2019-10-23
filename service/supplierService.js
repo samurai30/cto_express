@@ -1,9 +1,14 @@
 const Suppliers = require('../database/models/SupplierModel');
 const {formatMongoData, checkObjectId} = require('../helpers/dbHelper');
 const constant = require('../constants')
-
+const mongoose = require('mongoose')
+const Rawmaterials = require('../database/models/rawMaterialModel')
 module.exports.createSupplier = async (supplierData) =>{
     try{
+        const {raw_ids} = supplierData;
+       
+        let raw = await Rawmaterials.find().where('_id').in(raw_ids).exec();
+        supplierData.raw_material = raw
         let supplier = new Suppliers({...supplierData});
         let result = await supplier.save();
         return formatMongoData(result);
