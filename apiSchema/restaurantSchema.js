@@ -14,5 +14,5 @@ module.exports.getAllRestaurantSchema = Joi.object().keys({
 module.exports.updateRestaurantSchema = Joi.object().keys({
     name: Joi.string(),
     owner_name: Joi.string(),
-    owner_contact: Joi.string()
+    owner_contact: Joi.string().regex(/^[0-9]{10}$/)
 });
