@@ -36,3 +36,67 @@ module.exports.createPurchaseOrder = async (purchaseOrderData) =>{
     }
 }
 
+module.exports.getAllPurchaseOrders = async ({skip=0, limit=10}) =>{
+    try{
+        let purchaseOrders = await PurchaseOrders.find({})
+        .populate('supplier','name contact address gstin')
+        .populate({path:'store',select:'address contact restaurant',populate:{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'}})
+        .populate('raw_materials._id')
+        .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}})    
+        .skip(parseInt(skip)).limit(parseInt(limit));
+        return formatMongoData(purchaseOrders);
+    }catch(error){
+        console.log('Something went wrong: Service: getAllPurchaseOrders', error)
+        throw new Error(error)
+    }
+}
+
+module.exports.getPurchaseOrderById = async ({id}) =>{
+    try{
+        checkObjectId(id);
+        let purchaseOrders = await PurchaseOrders.findById(id)
+        .populate('supplier','name contact address gstin')
+        .populate({path:'store',select:'address contact restaurant',populate:{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'}})
+        .populate('raw_materials._id')
+        .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}});
+        if(!purchaseOrders){
+            throw new Error("Sorry Purchase Order not found") 
+        }
+        return formatMongoData(purchaseOrders);
+    }catch(error){
+        console.log('Something went wrong: Service: getPurchaseOrderById', error)
+        throw new Error(error)
+    }
+}
+
+module.exports.updatePurchaseOrder = async ({id, updateInfo}) =>{
+    try{
+        checkObjectId(id);
+        let purchaseOrder = await PurchaseOrders.findOneAndUpdate({_id:id},updateInfo,{ new : true});
+     
+        if(!purchaseOrder){
+            throw new Error("Sorry Purchase Order not found") 
+        }
+        return formatMongoData(purchaseOrders);
+    }catch(error){
+        console.log('Something went wrong: Service: updatePurchaseOrder', error)
+        throw new Error(error)
+    }
+}
+
+module.exports.deletePurchaseOrder = async ({id}) =>{
+    try{
+        checkObjectId(id);
+        let purchaseOrder = await PurchaseOrders.findByIdAndDelete(id);
+     
+        if(!purchaseOrder){
+            throw new Error("Sorry Purchase Order not found") 
+        }
+        return formatMongoData(purchaseOrder);
+    }catch(error){
+        console.log('Something went wrong: Service: deletePurchaseOrder', error)
+        throw new Error(error)
+    }
+}
+
+

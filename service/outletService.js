@@ -45,9 +45,6 @@ module.exports.createOutlet = async (outletData) =>{
 module.exports.getAllOutlets = async ({skip=0, limit=10}) =>{
     try{
         let outlets = await Outlets.find({})
-        .populate({path:'outlet',select:'city address contact manager restaurant',
-        populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
-        })
         .populate('restaurant','name owner_name owner_contact')
         .populate('manager','name address email contact')
         .populate('raw_materials._id')
