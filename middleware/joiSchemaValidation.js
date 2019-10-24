@@ -23,7 +23,7 @@ module.exports.validateBody = (schema) =>{
         if(error) {
             response.body = error;
             response.message = constants.requestValidationMessage.BAD_REQUEST;
-            return res.status(response.status).send(response)
+            return res.status(400).send(response)
         }
         return next();
     }
@@ -37,7 +37,7 @@ module.exports.validateQueryData = (schema) =>{
         if(error) {
             response.body = error;
             response.message = constants.requestValidationMessage.BAD_REQUEST;
-            return res.status(response.status).send(response)
+            return res.status(400).send(response)
         }
         return next();
     }

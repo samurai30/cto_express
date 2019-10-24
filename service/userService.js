@@ -15,6 +15,7 @@ module.exports.registerUser = async (userData) =>{
         if(phone){
             throw new Error("contact number already exits")
         }
+
         userData.password =  await bcrypt.hash(userData.password, 12);
         const newUser = new Users({...userData});
         let result = await newUser.save();
