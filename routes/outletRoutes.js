@@ -8,10 +8,10 @@ const checRoles = require('../middleware/checkRoles')
 
 router.post('/',joiValidation.validateBody(outletSchema.createOutletSchema),tokenValidate.validateToken,checRoles.hasAccess('super_admin'),outletController.createOutlet);
 
-router.get('/:id',tokenValidate.validateToken,checRoles.hasAccess(['store_manager','outlet_manager']),outletController.getOutletById);
+router.get('/:id',tokenValidate.validateToken,checRoles.hasAccess(['super_admin']),outletController.getOutletById);
 
 router.get('/',joiValidation.validateQueryData(outletSchema.getAllOutletSchema)
-,tokenValidate.validateToken,checRoles.hasAccess(['store_manager','outlet_manager']),outletController.getAllOutlets);
+,tokenValidate.validateToken,checRoles.hasAccess(['super_admin']),outletController.getAllOutlets);
 
 router.put('/:id',joiValidation.validateBody(outletSchema.updateOutletSchema),tokenValidate.validateToken,checRoles.hasAccess('super_admin'),outletController.updateOutlet);
 
