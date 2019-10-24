@@ -4,13 +4,13 @@ const Outlet = new mongoose.Schema({
     city: String,
     address: String,
     contact: String,
-    manager: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
     restaurant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant'
+    },
+    manager: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     raw_materials:[{
         _id:{

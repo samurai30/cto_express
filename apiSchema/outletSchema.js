@@ -4,8 +4,8 @@ module.exports.createOutletSchema = Joi.object().keys({
     city: Joi.string().required(),
     address: Joi.string().required(),
     contact: Joi.string().regex(/^[0-9]{10}$/).required(),
-    manager: Joi.string().required(),
     restaurant:Joi.string().required(),
+    manager: Joi.string().required(),
     raw_ids: Joi.array().required()
 })
 
@@ -18,7 +18,7 @@ module.exports.updateOutletSchema = Joi.object().keys({
     city: Joi.string(),
     address: Joi.string(),
     contact: Joi.string().regex(/^[0-9]{10}$/),
-    manager: Joi.string(),
     restaurant:Joi.string(),
+    manager: Joi.string(),
     raw_ids: Joi.array()
 });

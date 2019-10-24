@@ -26,13 +26,13 @@ module.exports.createOutlet = async (outletData) =>{
 
         outletData.manager = await users.findOne({_id:outletData.manager,role:"outlet_manager"});
 
-        let checkManager = await Outlets.findOne({manager:outletData.manager})
+        let checkManager = await Outlets.findOne({manager:outletData.manager});
         if(checkManager){
             throw new Error("Sorry this Outlet is already assigned.")
         }
 
         let outlet = new Outlets({...outletData});
-        // let result = await outlet.save();
+        let result = await outlet.save();
         return formatMongoData(result);
     }catch(error){
         console.log('Something went wrong: Service: createOutlet', error)
