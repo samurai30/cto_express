@@ -46,6 +46,13 @@ module.exports = {
         PURCHASE_ORDER_DELETED: "Purchase Order Deleted",
         PURCHASE_ORDER_NOT_FOUND: "Purchase Order not found"
     },
+    dispatchOrder:{
+        DISPATCH_ORDER_CREATED: "Dispatch Order Created",
+        DISPATCH_ORDER_FETCHED: "Dispatch Order Fetched",
+        DISPATCH_ORDER_UPDATED: "Dispatch Order Updated",
+        DISPATCH_ORDER_DELETED: "Dispatch Order Deleted",
+        DISPATCH_ORDER_NOT_FOUND: "Dispatch Order not found"
+    },
     requestValidationMessage:{
         BAD_REQUEST: "Invalid Fields",
         TOKEN_MISSING: "Missing Token"
