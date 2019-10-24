@@ -15,13 +15,13 @@ module.exports.registerUser = async (userData) =>{
         if(phone){
             throw new Error("contact number already exits")
         }
-        userData.password =  await bcrypt.hash(userData.password, 12)
-        const newUser = new Users({...userData})
+        userData.password =  await bcrypt.hash(userData.password, 12);
+        const newUser = new Users({...userData});
         let result = await newUser.save();
 
         return formatMongoData(result);
     }catch(error){
-        console.log('Something went wrong: Service: registerUser', error)
+        console.log('Something went wrong: Service: registerUser', error);
         throw new Error(error);
     }
 }
