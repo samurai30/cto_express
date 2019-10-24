@@ -53,6 +53,13 @@ module.exports = {
         DISPATCH_ORDER_DELETED: "Dispatch Order Deleted",
         DISPATCH_ORDER_NOT_FOUND: "Dispatch Order not found"
     },
+    outletRequest:{
+        OUTLET_REQUEST_CREATED: "Outlet Request Created",
+        OUTLET_REQUEST_FETCHED: "Outlet Request Fetched",
+        OUTLET_REQUEST_UPDATED: "Outlet Request Updated",
+        OUTLET_REQUEST_DELETED: "Outlet Request Deleted",
+        OUTLET_REQUEST_NOT_FOUND: "Outlet Request not found"
+    },
     requestValidationMessage:{
         BAD_REQUEST: "Invalid Fields",
         TOKEN_MISSING: "Missing Token"
