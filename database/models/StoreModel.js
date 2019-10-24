@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const storeSchema = new mongoose.Schema({
     address: String,
     contact: String,
-    restuarant:{
+    restaurant:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant'   
     },

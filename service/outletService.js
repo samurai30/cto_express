@@ -13,6 +13,7 @@ module.exports.createOutlet = async (outletData) =>{
         raw_ids.map(value=>{
             ids.push(value.id)
         })
+
         let raw = await Rawmaterials.find().where('_id').in(ids).exec();
         
         let data = []
@@ -22,11 +23,12 @@ module.exports.createOutlet = async (outletData) =>{
         });
         outletData.raw_materials = data;
 
-        outletData.restaurant = await Restaurants.findOne({_id:outletData.restaurant});
+        outletData.restaurant = await Restaurants.findOne({_id:outletData.restaurant_id});
 
-        outletData.manager = await users.findOne({_id:outletData.manager,role:"outlet_manager"});
-
-        let checkManager = await Outlets.findOne({manager:outletData.manager});
+        outletData.manager = await users.findOne({_id:outletData.manager_id,role:"outlet_manager"});
+        
+        let checkManager = await Outlets.findOne({manager:outletData.manager_id});
+        
         if(checkManager){
             throw new Error("Sorry this Outlet is already assigned.")
         }
@@ -42,7 +44,15 @@ module.exports.createOutlet = async (outletData) =>{
 
 module.exports.getAllOutlets = async ({skip=0, limit=10}) =>{
     try{
-        let outlets = await Outlets.find({}).skip(parseInt(skip)).limit(parseInt(limit));
+        let outlets = await Outlets.find({})
+        .populate({path:'outlet',select:'city address contact manager restaurant',
+        populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
+        })
+        .populate('restaurant','name owner_name owner_contact')
+        .populate('manager','name address email contact')
+        .populate('raw_materials._id')
+        .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}})    
+        .skip(parseInt(skip)).limit(parseInt(limit));
         return formatMongoData(outlets);
     }catch(error){
         console.log('Something went wrong: Service: getAllOutlets', error)
@@ -53,7 +63,14 @@ module.exports.getAllOutlets = async ({skip=0, limit=10}) =>{
 module.exports.getOutletById = async ({id}) =>{
     try{
         checkObjectId(id);
-        let outlet = await Outlets.findById(id);
+        let outlet = await Outlets.findById(id)
+        .populate({path:'outlet',select:'city address contact manager restaurant',
+        populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
+        })
+        .populate('restaurant','name owner_name owner_contact')
+        .populate('manager','name address email contact')
+        .populate('raw_materials._id')
+        .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}});
         if(!outlet){
             throw new Error(constant.outlet.OUTLET_NOT_FOUND) 
         }

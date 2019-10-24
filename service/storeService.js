@@ -23,7 +23,7 @@ module.exports.createStore = async (storeData) =>{
 
         storeData.raw_materials = data;
         storeData.manager = await Manager.findOne({_id:storeData.manager_id,role:"store_manager"});
-        storeData.restuarant = await Restaurant.findOne({_id:storeData.restaurant_id});
+        storeData.restaurant = await Restaurant.findOne({_id:storeData.restaurant_id});
         storeData.outlet = outlet;
         let checkManager = await Store.findOne({manager:storeData.manager_id})
         if(checkManager){
@@ -44,7 +44,7 @@ module.exports.getAllStores = async ({skip=0, limit=10}) =>{
         .populate({path:'outlet',select:'city address contact manager restaurant',
         populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
         })
-        .populate('restuarant','name owner_name owner_contact')
+        .populate('restaurant','name owner_name owner_contact')
         .populate('manager','name address email contact')
         .populate('raw_materials._id')
         .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}})
@@ -64,7 +64,7 @@ module.exports.getStoreById = async ({id}) =>{
         .populate({path:'outlet',select:'city address contact manager restaurant',
         populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
         })
-        .populate('restuarant','name owner_name owner_contact')
+        .populate('restaurant','name owner_name owner_contact')
         .populate('manager','name address email contact')
         .populate('raw_materials._id')
         .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}});
