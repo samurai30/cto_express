@@ -7,7 +7,7 @@ const rawMaterialSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Unit'
     },
-    catagory:{
+    category:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     }

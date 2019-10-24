@@ -13,11 +13,15 @@ const storeSchema = new mongoose.Schema({
     },
     raw_materials:[{
         _id:{
-            type: mongoose.Schema.Types.Object,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'RawMaterial'
         },
         stock_qty: {type: Number},
         threshold: {type: Number}
+    }],
+    outlet:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Outlet'
     }]
 },
 {
@@ -27,6 +31,8 @@ const storeSchema = new mongoose.Schema({
             ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
+            delete ret.createdAt;
+            delete ret.updatedAt
             return ret;
         }
     }
