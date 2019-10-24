@@ -39,6 +39,13 @@ module.exports = {
         OUTLET_DELETED: "Outlet Deleted",
         OUTLET_NOT_FOUND: "Outlet not found"
     },
+    purchaseOrder:{
+        PURCHASE_ORDER_CREATED: "Purchase Order Created",
+        PURCHASE_ORDER_FETCHED: "Purchase Order Fetched",
+        PURCHASE_ORDER_UPDATED: "Purchase Order Updated",
+        PURCHASE_ORDER_DELETED: "Purchase Order Deleted",
+        PURCHASE_ORDER_NOT_FOUND: "Purchase Order not found"
+    },
     requestValidationMessage:{
         BAD_REQUEST: "Invalid Fields",
         TOKEN_MISSING: "Missing Token"

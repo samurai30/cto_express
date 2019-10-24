@@ -32,6 +32,8 @@ app.use('/api/v1/category', require('./routes/categoryRoutes'))
 app.use('/api/v1/restaurant', require('./routes/restaurantRoutes'))
 app.use('/api/v1/store', require('./routes/storeRoutes'))
 app.use('/api/v1/outlet', require('./routes/outletRoutes'))
+app.use('/api/v1/purchase_order', require('./routes/purchaseOrderRoutes'))
+
 
 //Error Handle
 app.use(function(err,req,res,next){
