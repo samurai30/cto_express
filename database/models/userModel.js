@@ -5,7 +5,11 @@ const userSchema = new mongoose.Schema({
     address: String,
     contact: String,
     email: String,
-    password: String
+    password: String,
+    restaurant:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant'
+    }
 },{
     timestamps: true,
     toObject:{
@@ -22,10 +26,11 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.plugin(require('mongoose-role'),{
-    roles: ['super_admin','store_manager','outlet_manager'],
+    roles: ['super_admin','restaurant_admin','store_manager','outlet_manager'],
     accessLevels:{
-        outlet_manager: ['super_admin','outlet_manager'],
-        store_manager: ['store_manager','super_admin'],
+        outlet_manager: ['super_admin','outlet_manager','restaurant_admin'],
+        store_manager: ['store_manager','super_admin','restaurant_admin'],
+        restaurant_admin:['restaurant_admin','super_admin'],
         super_admin: ['super_admin']
     }
 });

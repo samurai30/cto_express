@@ -7,7 +7,7 @@ module.exports.createOutletSchema = Joi.object().keys({
     restaurant_id:Joi.string().required(),
     manager_id: Joi.string().required(),
     raw_ids: Joi.array().required()
-})
+});
 
 module.exports.getAllOutletSchema = Joi.object().keys({
     skip: Joi.string(),

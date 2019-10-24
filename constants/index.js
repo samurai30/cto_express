@@ -59,5 +59,6 @@ module.exports = {
         UNIT_FETCHED: "Units Fetched Successfuly",
         UNIT_NOT_FOUND: "Unit Not Found",
         UNIT_DELETE: "Unit deleted"
-    }
+    },
+    roles:['restaurnat_admin','store_manager','outlet_manager'] 
 }

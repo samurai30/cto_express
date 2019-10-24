@@ -100,4 +100,20 @@ module.exports.deleteUser = async (req,res) => {
     }
 
     return res.status(response.status).send(response)
-}
+};
+
+module.exports.getUserRole = async (req,res) => {
+    let response = {...constants.defaultServerResponse};
+
+    try{
+        const responseFromService = await userService.getUserRole(req.params);
+        response.status = 200;
+        response.message = "Success";
+        response.body = responseFromService;
+    }catch(error){
+        console.log('Something went wrong: Controller: getUserRole');
+        response.message = error.message
+    }
+
+    return res.status(response.status).send(response)
+};

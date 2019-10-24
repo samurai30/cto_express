@@ -11,7 +11,10 @@ module.exports.registerUser = async (userData) =>{
         if(user){
             throw new Error(constants.userMessage.USER_EXISTS)
         }
-   
+        let phone = await Users.findOne({contact: userData.contact})
+        if(phone){
+            throw new Error("contact number already exits")
+        }
         userData.password =  await bcrypt.hash(userData.password, 12)
         const newUser = new Users({...userData})
         let result = await newUser.save();
@@ -25,26 +28,26 @@ module.exports.registerUser = async (userData) =>{
 
  module.exports.login = async ({email,password}) =>{
     try{
-        let user = await Users.findOne({email: email})
+        let user = await Users.findOne({email: email});
         if(!user){
             throw new Error(constants.userMessage.USER_NOT_FOUND)
         }
 
-        const isValid = await bcrypt.compare(password,user.password)
+        const isValid = await bcrypt.compare(password,user.password);
         
         if(!isValid){
             throw new Error(constants.userMessage.INVALID_PASSWORD)
         }
 
-        const token = jwt.sign({id: user._id}, process.env.SECRET_KEY || '@!#!@SADD!@asdaskj@$',{expiresIn: "1d"})
+        const token = jwt.sign({id: user._id}, process.env.SECRET_KEY || '@!#!@SADD!@asdaskj@$',{expiresIn: "1d"});
         
-        return {token: token}
+        return {token: token, id: user._id}
 
     }catch(error){
-        console.log('Something went wrong: Service: login', error)
+        console.log('Something went wrong: Service: login', error);
         throw new Error(error);
     }
-}
+};
 
 module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
     try{
@@ -52,10 +55,10 @@ module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
      let user = await Users.find({}).skip(parseInt(skip)).limit(parseInt(limit));
      return formatMongoData(user);
     }catch(error){
-      console.log('Something went wrong: Service: getAllProducts', error)
+      console.log('Something went wrong: Service: getAllProducts', error);
       throw new Error(error)
     }
-  }
+  };
   
   module.exports.getUserById = async ({id}) =>{
     try{
@@ -66,10 +69,10 @@ module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
      }
      return formatMongoData(user);
     }catch(error){
-      console.log('Something went wrong: Service: getRawMaterialById', error)
+      console.log('Something went wrong: Service: getRawMaterialById', error);
       throw new Error(error)
     }
-  }
+  };
   
   module.exports.updateUsers = async ({id, updateInfo}) =>{
     try{
@@ -81,10 +84,10 @@ module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
      }
      return formatMongoData(user);
     }catch(error){
-      console.log('Something went wrong: Service: updateRawMaterial', error)
+      console.log('Something went wrong: Service: updateRawMaterial', error);
       throw new Error(error)
     }
-  }
+  };
   
   module.exports.deleteUser = async ({id}) =>{
     try{
@@ -96,7 +99,22 @@ module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
      }
      return formatMongoData(user);
     }catch(error){
-      console.log('Something went wrong: Service: deleteUser', error)
+      console.log('Something went wrong: Service: deleteUser', error);
       throw new Error(error)
     }
-  }
+  };
+
+
+module.exports.getUserRole = async ({id}) =>{
+    try{
+        checkObjectId(id);
+        let user = await Users.findById(id);
+        if(!user){
+            throw new Error("Sorry user not found")
+        }
+        return {user_role:user.role};
+    }catch(error){
+        console.log('Something went wrong: Service: getUserRole', error);
+        throw new Error(error)
+    }
+};
