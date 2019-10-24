@@ -77,7 +77,7 @@ module.exports.updatePurchaseOrder = async ({id, updateInfo}) =>{
         if(!purchaseOrder){
             throw new Error("Sorry Purchase Order not found") 
         }
-        return formatMongoData(purchaseOrders);
+        return formatMongoData(purchaseOrder);
     }catch(error){
         console.log('Something went wrong: Service: updatePurchaseOrder', error)
         throw new Error(error)
