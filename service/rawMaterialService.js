@@ -2,20 +2,26 @@ const RawMaterial = require('../database/models/rawMaterialModel');
 const {formatMongoData, checkObjectId} = require('../helpers/dbHelper')
 const constant = require('../constants')
 const Units = require('../database/models/UnitsModel')
-
-module.exports.createRawMaterial = async ({name,unit_id}) =>{
+const Category = require('../database/models/CategoryModel')
+module.exports.createRawMaterial = async ({name,unit_id,cat_id}) =>{
    try{
     checkObjectId(unit_id);
+    checkObjectId(cat_id);
     let unit = await Units.findById(unit_id)
+    let cat = await Category.findById(cat_id)
     if(!unit){
       throw new Error("Sorry cloudn't find any units with id: "+unit_id)
     }
+    if(!cat){
+      throw new Error("Sorry cloudn't find any category with id: "+cat_id)
+    }
+
     let rawmaterial = await RawMaterial.findOne({name:name.toLowerCase()})
      
     if(rawmaterial){
       throw new Error("This item already exists")
     }
-    let raw = new RawMaterial({name:name.toLowerCase(),unit})
+    let raw = new RawMaterial({name:name.toLowerCase(),unit,category:cat})
     let result = await raw.save();
     return formatMongoData(result);
    }catch(error){
@@ -27,7 +33,7 @@ module.exports.createRawMaterial = async ({name,unit_id}) =>{
 module.exports.getAllRawMaterials = async ({skip=0, limit=10}) =>{
   try{
  
-   let rawmaterials = await RawMaterial.find({}).skip(parseInt(skip)).limit(parseInt(limit));
+   let rawmaterials = await RawMaterial.find({}).populate('unit').populate('category').skip(parseInt(skip)).limit(parseInt(limit));
    return formatMongoData(rawmaterials);
   }catch(error){
     console.log('Something went wrong: Service: getAllProducts', error)

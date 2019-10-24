@@ -14,7 +14,7 @@ module.exports.createOutlet = async (outletData) =>{
         const {restaurant} = outletData;
         let restrnt = await Restaurants.findOne().where('_id').in(restaurant).exec();
         outletData.restaurant = restrnt;
-
+            
         let outlet = new Outlets({...outletData});
         let result = await outlet.save();
         return formatMongoData(result);

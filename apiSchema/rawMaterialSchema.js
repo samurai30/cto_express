@@ -12,7 +12,7 @@ module.exports.getAllRawMaterialSchema = Joi.object().keys({
 });
 
 module.exports.updateRawMaterialSchema = Joi.object().keys({
-    name: Joi.string().required(),
-    unit_id: Joi.string().required(),
-    cat_id: Joi.string().required()
+    name: Joi.string(),
+    unit_id: Joi.string(),
+    cat_id: Joi.string()
 });

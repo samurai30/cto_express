@@ -4,25 +4,27 @@ const constant = require('../constants')
 const Rawmaterials = require('../database/models/rawMaterialModel')
 const Manager = require('../database/models/userModel')
 const Restaurant = require('../database/models/RestaurantModel')
+const Outlets = require('../database/models/OutletModel')
 module.exports.createStore = async (storeData) =>{
     try{
-        const {raw_ids} = storeData;
+        const {raw_ids,outlet_ids} = storeData;
         let ids = [];
         raw_ids.map(value=>{
             ids.push(value.id)
-        })
+        });
         let raw = await Rawmaterials.find().where('_id').in(ids).exec();
-        
-        let data = []
+        let outlet = await Outlets.find().where('_id').in(outlet_ids).exec();
+
+        let data = [];
 
         raw.map(value=>{
             data.push({_id:value,stock_qty:raw_ids[raw.indexOf(value)].stock_qty,threshold:raw_ids[raw.indexOf(value)].threshold})
         });
 
         storeData.raw_materials = data;
-        storeData.manager = await Manager.findOne({_id:storeData.manager_id,role:"store_manager"})
-        storeData.restuarant = await Restaurant.findOne({_id:storeData.restaurant_id})
-
+        storeData.manager = await Manager.findOne({_id:storeData.manager_id,role:"store_manager"});
+        storeData.restuarant = await Restaurant.findOne({_id:storeData.restaurant_id});
+        storeData.outlet = outlet;
         let checkManager = await Store.findOne({manager:storeData.manager_id})
         if(checkManager){
             throw new Error("Sorry this store is already assigned.")
@@ -38,7 +40,16 @@ module.exports.createStore = async (storeData) =>{
 
 module.exports.getAllStores = async ({skip=0, limit=10}) =>{
     try{
-        let store = await Store.find({}).skip(parseInt(skip)).limit(parseInt(limit));
+        let store = await Store.find({})
+        .populate({path:'outlet',select:'city address contact manager restaurant',
+        populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
+        })
+        .populate('restuarant','name owner_name owner_contact')
+        .populate('manager','name address email contact')
+        .populate('raw_materials._id')
+        .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}})
+        .skip(parseInt(skip)).limit(parseInt(limit));
+
         return formatMongoData(store);
     }catch(error){
         console.log('Something went wrong: Service: getAllStores', error)
@@ -49,7 +60,14 @@ module.exports.getAllStores = async ({skip=0, limit=10}) =>{
 module.exports.getStoreById = async ({id}) =>{
     try{
         checkObjectId(id);
-        let store = await Store.findById(id);
+        let store = await Store.findById(id)
+        .populate({path:'outlet',select:'city address contact manager restaurant',
+        populate:[{path:'restaurant',model:'Restaurant',select:'name owner_name owner_contact'},{path:'manager',model:'User',select:'name address'}]
+        })
+        .populate('restuarant','name owner_name owner_contact')
+        .populate('manager','name address email contact')
+        .populate('raw_materials._id')
+        .populate({path:'raw_materials._id',populate:{path:'unit',model:'Unit'}});
         if(!store){
             throw new Error("Sorry store not found") 
         }
