@@ -14,7 +14,7 @@ const Outlet = new mongoose.Schema({
     },
     raw_materials:[{
         _id:{
-            type: mongoose.Schema.Types.Object,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'RawMaterial'
         },
         stock_qty: {type: Number},

@@ -8,12 +8,6 @@ const Rawmaterials = require('../database/models/rawMaterialModel')
 
 module.exports.createOutlet = async (outletData) =>{
     try{
-        let manager = await users.findOne({_id:outletData.manager,role:"outlet_manager"})
-        outletData.manager = manager;
-
-        let restaurant = await Restaurants.findOne({_id:outletData.restaurant})
-        outletData.restaurant = restaurant;
-
         const {raw_ids} = outletData;
         let ids = [];
         raw_ids.map(value=>{
@@ -28,8 +22,17 @@ module.exports.createOutlet = async (outletData) =>{
         });
         outletData.raw_materials = data;
 
+        outletData.restaurant = await Restaurants.findOne({_id:outletData.restaurant});
+
+        outletData.manager = await users.findOne({_id:outletData.manager,role:"outlet_manager"});
+
+        let checkManager = await Outlets.findOne({manager:outletData.manager})
+        if(checkManager){
+            throw new Error("Sorry this Outlet is already assigned.")
+        }
+
         let outlet = new Outlets({...outletData});
-        let result = await outlet.save();
+        // let result = await outlet.save();
         return formatMongoData(result);
     }catch(error){
         console.log('Something went wrong: Service: createOutlet', error)
