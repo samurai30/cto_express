@@ -6,7 +6,7 @@ const userSchema = require('../apiSchema/userSchema');
 const tokenValidate = require('../middleware/tokenValidation');
 const checRoles = require('../middleware/checkRoles');
 
-router.post('/add_users',tokenValidate.validateToken,checRoles.hasAccess('super_admin'),joiValidation.validateBody(userSchema.createUserSchema),userController.registerUser);
+router.post('/add_users',joiValidation.validateBody(userSchema.createUserSchema),tokenValidate.validateToken,checRoles.hasAccess('super_admin'),userController.registerUser);
 router.post('/login',joiValidation.validateBody(userSchema.loginUserSchema),userController.login);
 router.get('/role/:id',tokenValidate.validateToken,userController.getUserRole);
 router.get('/:id',tokenValidate.validateToken,checRoles.hasAccess('super_admin'),userController.getUserById);

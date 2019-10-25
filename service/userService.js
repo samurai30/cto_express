@@ -49,7 +49,7 @@ module.exports.registerUser = async (userData) =>{
 
         const token = jwt.sign({id: user._id}, process.env.SECRET_KEY || '@!#!@SADD!@asdaskj@$',{expiresIn: "1d"})
         
-        return {token: token}
+        return {token: token,id:user._id}
 
     }catch(error){
         console.log('Something went wrong: Service: login', error)
@@ -108,6 +108,20 @@ module.exports.getAllUsers = async ({skip=0, limit=10}) =>{
      return formatMongoData(user);
     }catch(error){
       console.log('Something went wrong: Service: deleteUser', error)
+      throw new Error(error)
+    }
+  }
+  module.exports.getUserRole = async ({id}) =>{
+    try{
+     checkObjectId(id);
+     let user = await Users.findById(id);
+     
+     if(!user){
+       throw new Error("Sorry user not found") 
+     }
+     return {user_role:user.role};
+    }catch(error){
+      console.log('Something went wrong: Service: getUserRole', error)
       throw new Error(error)
     }
   }

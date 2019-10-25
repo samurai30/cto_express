@@ -18,6 +18,7 @@ const validateObjectSchema = (data,schema) =>{
 module.exports.validateBody = (schema) =>{
 
     return(req,res,next) =>{
+        console.log(req.body)
         let response = {...constants.defaultServerResponse}
         const error = validateObjectSchema(req.body,schema);
         if(error) {
