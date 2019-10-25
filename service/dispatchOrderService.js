@@ -87,7 +87,7 @@ module.exports.updateDispatchOrder = async ({id, updateInfo}) =>{
 module.exports.deleteDispatchOrder = async ({id}) =>{
     try{
         checkObjectId(id);
-        let dispatchOrder = await dispatchOrder.findByIdAndDelete(id);
+        let dispatchOrder = await DispatchOrders.findByIdAndDelete(id);
      
         if(!dispatchOrder){
             throw new Error("Sorry Dispatch Order not found") 
