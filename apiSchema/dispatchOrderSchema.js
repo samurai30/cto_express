@@ -3,7 +3,7 @@ const Joi = require('@hapi/joi')
 module.exports.createDispatchOrderSchema = Joi.object().keys({
     date: Joi.date().required(),
     total_amount: Joi.number().required(),
-    gst: Joi.number().required(),
+    gst: Joi.string().required(),
     grand_total: Joi.number().required(),
     invoice_no: Joi.string(),
     outlet_id:Joi.string().required(),

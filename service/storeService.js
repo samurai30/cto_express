@@ -5,6 +5,7 @@ const Rawmaterials = require('../database/models/rawMaterialModel')
 const Manager = require('../database/models/userModel')
 const Restaurant = require('../database/models/RestaurantModel')
 const Outlets = require('../database/models/OutletModel')
+const Supplier = require('../database/models/SupplierModel')
 module.exports.createStore = async (storeData) =>{
     try{
         const {raw_ids,outlet_ids} = storeData;
@@ -14,6 +15,12 @@ module.exports.createStore = async (storeData) =>{
         });
         let raw = await Rawmaterials.find().where('_id').in(ids).exec();
         let outlet = await Outlets.find().where('_id').in(outlet_ids).exec();
+         
+        outlet.forEach(v=>{
+            if(v.restaurant.toString() !== storeData.restaurant_id.toString()){
+                throw new Error('Not All the outlets provided belong to the same restaurant')
+            }
+        })
 
         let data = [];
 
@@ -24,6 +31,7 @@ module.exports.createStore = async (storeData) =>{
         storeData.raw_materials = data;
         storeData.manager = await Manager.findOne({_id:storeData.manager_id,role:"store_manager"});
         storeData.restaurant = await Restaurant.findOne({_id:storeData.restaurant_id});
+        storeData.supplier = await Supplier.find().where('_id').in(storeData.supplier_id).exec();
         storeData.outlet = outlet;
         let checkManager = await Store.findOne({manager:storeData.manager_id})
         if(checkManager){

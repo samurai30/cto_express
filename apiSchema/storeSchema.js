@@ -6,7 +6,8 @@ module.exports.createStoreSchema = Joi.object().keys({
     manager_id: Joi.string().required(),
     restaurant_id: Joi.string().required(),
     raw_ids: Joi.array().required(),
-    outlet_ids: Joi.array().required()
+    outlet_ids: Joi.array().required(),
+    supplier_id:Joi.array().required()
 })
 
 module.exports.getAllStoreSchema = Joi.object().keys({

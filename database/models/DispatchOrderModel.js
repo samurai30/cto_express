@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const DispatchOrder = new mongoose.Schema({
     date: Date,
     total_amount: Number,
-    gst: Number,
+    gst: String,
     grand_total: Number,
     invoice_no:String,
     outlet: {

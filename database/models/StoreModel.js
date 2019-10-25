@@ -22,7 +22,11 @@ const storeSchema = new mongoose.Schema({
     outlet:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Outlet'
-    }]
+    }],
+    supplier:[
+        {type: mongoose.Schema.Types.ObjectId,
+        ref: 'Supplier'}
+    ]
 },
 {
     timestamps: true,
