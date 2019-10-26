@@ -24,7 +24,8 @@ const storeSchema = new mongoose.Schema({
         ref: 'Outlet'
     }],
     supplier:[
-        {type: mongoose.Schema.Types.ObjectId,
+        {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier'}
     ]
 },

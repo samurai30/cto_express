@@ -3,7 +3,7 @@ const {formatMongoData, checkObjectId} = require('../helpers/dbHelper');
 const constants = require('../constants')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-
+const Restaurant = require('../database/models/RestaurantModel')
  
 module.exports.registerUser = async (userData) =>{
     try{
@@ -19,10 +19,11 @@ module.exports.registerUser = async (userData) =>{
         const {role} = userData;
         if(restaurant_id){
           checkObjectId(restaurant_id)
-          
-        }else{
-
+          let rest = await Restaurant.findById(restaurant_id);
+          userData.restaurant = rest
         }
+        
+        
         userData.password =  await bcrypt.hash(userData.password, 12)
         const newUser = new Users({...userData})
         let result = await newUser.save();

@@ -11,10 +11,12 @@ module.exports.createPurchaseOrderSchema = Joi.object().keys({
     raw_ids: Joi.array().required()
 });
 
+
 module.exports.getAllPurchaseOrderSchema = Joi.object().keys({
     skip: Joi.string(),
     limit: Joi.string()
 });
+
 
 module.exports.updatePurchaseOrderSchema = Joi.object().keys({
     date: Joi.date(),

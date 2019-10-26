@@ -9,14 +9,15 @@ const checRoles = require('../middleware/checkRoles')
 
 
 router.post('/',
-joiSchemaValidation.validateBody(rawMaterialSchema.createRawMaterialSchema),tokenValidation.validateToken,checRoles.hasAccess('super_admin'),
+joiSchemaValidation.validateBody(rawMaterialSchema.createRawMaterialSchema),tokenValidation.validateToken,checRoles.hasAccess(['restaurant_admin','store_manager']),
 rawController.createRawMaterial)
 
-router.get('/:id',tokenValidation.validateToken,rawController.getRawMaterialById)
 
-router.get('/',tokenValidation.validateToken,
+router.get('/all/:restaurant_id',tokenValidation.validateToken,
 joiSchemaValidation.validateQueryData(rawMaterialSchema.getAllRawMaterialSchema)
-,rawController.getAllRawMaterials)
+,checRoles.hasAccess(['restaurant_admin','store_manager','outlet_manager']),rawController.getAllRawMaterials)
+
+router.get('/:id',tokenValidation.validateToken,checRoles.hasAccess(['restaurant_admin','store_manager','outlet_manager']),rawController.getRawMaterialById)
 
 router.put('/:id',joiSchemaValidation.validateBody(rawMaterialSchema.updateRawMaterialSchema),tokenValidation.validateToken,checRoles.hasAccess('super_admin'),rawController.updateRawMaterial)
 

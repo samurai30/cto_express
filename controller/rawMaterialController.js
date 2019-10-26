@@ -21,7 +21,7 @@ module.exports.getAllRawMaterials = async (req,res) => {
     let response = {...constants.defaultServerResponse};
 
     try{
-        const responseFromService = await rawService.getAllRawMaterials(req.query);
+        const responseFromService = await rawService.getAllRawMaterials(req.query,req.params);
         response.status = 200;
         response.message = "success";
         response.body = responseFromService;

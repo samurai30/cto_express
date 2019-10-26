@@ -5,10 +5,12 @@ const joiValidation = require('../middleware/joiSchemaValidation');
 const userSchema = require('../apiSchema/userSchema');
 const tokenValidate = require('../middleware/tokenValidation');
 const checRoles = require('../middleware/checkRoles');
+const checkSelf = require('../middleware/checkSelf')
 
 router.post('/add_users',joiValidation.validateBody(userSchema.createUserSchema),tokenValidate.validateToken,checRoles.hasAccess('super_admin'),userController.registerUser);
 router.post('/login',joiValidation.validateBody(userSchema.loginUserSchema),userController.login);
 router.get('/role/:id',tokenValidate.validateToken,userController.getUserRole);
+router.get('/self/:id',tokenValidate.validateToken,checkSelf.hasAccess(),userController.getUserById);
 router.get('/:id',tokenValidate.validateToken,checRoles.hasAccess('super_admin'),userController.getUserById);
 router.get('/',joiValidation.validateQueryData(userSchema.getAllUserSchema),tokenValidate.validateToken,checRoles.hasAccess('super_admin'),userController.getAllUsers);
 router.put('/:id',joiValidation.validateBody(userSchema.updateUserSchema),tokenValidate.validateToken,checRoles.hasAccess('super_admin'),userController.updateUsers);

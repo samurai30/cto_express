@@ -3,12 +3,18 @@ const {formatMongoData, checkObjectId} = require('../helpers/dbHelper')
 const constant = require('../constants')
 const Units = require('../database/models/UnitsModel')
 const Category = require('../database/models/CategoryModel')
-module.exports.createRawMaterial = async ({name,unit_id,cat_id}) =>{
+const Restaurant = require('../database/models/RestaurantModel')
+module.exports.createRawMaterial = async ({name,unit_id,cat_id,restaurant_id}) =>{
    try{
     checkObjectId(unit_id);
     checkObjectId(cat_id);
+    checkObjectId(restaurant_id);
     let unit = await Units.findById(unit_id)
     let cat = await Category.findById(cat_id)
+    let rest = await Restaurant.findById(restaurant_id)
+    if(!rest){
+      throw new Error("Sorry no restaurants found by the provided ID: "+restaurant_id)
+    }
     if(!unit){
       throw new Error("Sorry cloudn't find any units with id: "+unit_id)
     }
@@ -16,24 +22,27 @@ module.exports.createRawMaterial = async ({name,unit_id,cat_id}) =>{
       throw new Error("Sorry cloudn't find any category with id: "+cat_id)
     }
 
-    let rawmaterial = await RawMaterial.findOne({name:name.toLowerCase()})
+    let rawmaterial = await RawMaterial.findOne({name:name.toLowerCase(),restaurant:restaurant_id})
      
     if(rawmaterial){
       throw new Error("This item already exists")
     }
-    let raw = new RawMaterial({name:name.toLowerCase(),unit,category:cat})
+
+    let raw = new RawMaterial({name:name.toLowerCase(),unit,category:cat,restaurant:rest})
     let result = await raw.save();
     return formatMongoData(result);
+    
    }catch(error){
      console.log('Something went wrong: Service: createRawMaterial', error)
      throw new Error(error)
    }
 }
 
-module.exports.getAllRawMaterials = async ({skip=0, limit=10}) =>{
+module.exports.getAllRawMaterials = async ({skip=0, limit=10},{restaurant_id}) =>{
   try{
  
-   let rawmaterials = await RawMaterial.find({}).populate('unit').populate('category').skip(parseInt(skip)).limit(parseInt(limit));
+   let rawmaterials = await RawMaterial.find({restaurant:restaurant_id}).populate('unit').populate('category').populate('restaurant').skip(parseInt(skip)).limit(parseInt(limit));
+
    return formatMongoData(rawmaterials);
   }catch(error){
     console.log('Something went wrong: Service: getAllProducts', error)
@@ -44,7 +53,7 @@ module.exports.getAllRawMaterials = async ({skip=0, limit=10}) =>{
 module.exports.getRawMaterialById = async ({id}) =>{
   try{
    checkObjectId(id);
-   let rawmaterial = await RawMaterial.findById(id);
+   let rawmaterial = await RawMaterial.findById(id).populate('unit').populate('category').populate('restaurant');
    if(!rawmaterial){
      throw new Error(constant.rawMaterial.RAW_MATERIAL_NOT_FOUND) 
    }
